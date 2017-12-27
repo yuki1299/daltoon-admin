@@ -1,1 +1,13 @@
 // Here you can add other styles
+
+/***** GENERAL *****/
+
+// Date Picker
+.react-datepicker-wrapper,
+.react-datepicker__input-container {
+  width: 100%;
+}
+
+textarea {
+  resize: none;
+}

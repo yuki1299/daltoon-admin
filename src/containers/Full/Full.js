@@ -8,7 +8,9 @@ import Aside from '../../components/Aside/';
 import Footer from '../../components/Footer/';
 
 import Lotery from '../../views/Lotery/';
-import Promotions from '../../views/Promotions/';
+import LoteryForm from '../../views/Lotery/Form/';
+import Offers from '../../views/Offers/';
+import OfferForm from '../../views/Offers/Form/';
 
 class Full extends Component {
   render() {
@@ -21,8 +23,12 @@ class Full extends Component {
             <Breadcrumb />
             <Container fluid>
               <Switch>
-                <Route path="/sorteios"  name="Sorteios"  component={Lotery}/>
-                <Route path="/promocoes" name="Promoções" component={Promotions}/>
+                <Route path="/sorteios/adicionar"   name="Sorteio"  component={LoteryForm}/>
+                <Route path="/sorteios/:id"         name="Sorteio"  component={LoteryForm}/>
+                <Route path="/sorteios"             name="Sorteios" component={Lotery}/>
+                <Route path="/ofertas/adicionar"    name="Oferta"   component={OfferForm}/>
+                <Route path="/ofertas/:id"          name="Oferta"   component={OfferForm}/>
+                <Route path="/ofertas"              name="Ofertas"  component={Offers}/>
                 <Redirect from="/" to="/sorteios"/>
               </Switch>
             </Container>

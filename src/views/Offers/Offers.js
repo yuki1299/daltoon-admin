@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import LoteryHeader from './LoteryHeader';
-import LoteryList from './LoteryList';
+import OffersHeader from './OffersHeader';
+import OffersList from './OffersList';
 import {
   Row,
   Col,
   Card,
 } from 'reactstrap';
 
-class Tables extends Component {
+class Offers extends Component {
   render() {
     return (
       <div className="animated fadeIn">
         <Row>
           <Col>
             <Card>
-              <LoteryHeader/>
-              <LoteryList/>
+              <OffersHeader/>
+              <OffersList/>
             </Card>
           </Col>
         </Row>
@@ -24,4 +24,4 @@ class Tables extends Component {
   }
 }
 
-export default Tables;
+export default Offers;
