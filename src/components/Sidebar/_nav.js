@@ -3,12 +3,12 @@ export default {
     {
       name: 'Sorteios',
       url: '/sorteios',
-      icon: 'fa fa-random',
+      icon: 'fa fa-tags',
     },
     {
-      name: 'Promoções',
-      url: '/promocoes',
-      icon: 'fa fa-tags',
+      name: 'Ofertas',
+      url: '/ofertas',
+      icon: 'fa fa-newspaper-o',
     }
   ]
 };
