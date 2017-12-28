@@ -29,7 +29,7 @@ class Full extends Component {
                 <Route path="/ofertas/adicionar"    name="Oferta"   component={OfferForm}/>
                 <Route path="/ofertas/:id"          name="Oferta"   component={OfferForm}/>
                 <Route path="/ofertas"              name="Ofertas"  component={Offers}/>
-                <Redirect from="/" to="/sorteios"/>
+                <Redirect from="/" to="/login"/>
               </Switch>
             </Container>
           </main>
