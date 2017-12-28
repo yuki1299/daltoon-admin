@@ -17,7 +17,7 @@ import {
 } from 'reactstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-
+import {Link} from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class Form extends Component {
@@ -32,15 +32,92 @@ class Form extends Component {
     this.state = {
       startDate: moment(),
       success: false,
+      raffle: {},
+      errors: {},
     };
 
     this.toggleSuccess = this.toggleSuccess.bind(this);
   }
 
-  handleChange(date) {
+  handleDatePickerChange = (date, fieldName) => {
+    let options = {}
+    options[fieldName] = date
+    
     this.setState({
-      startDate: date
-    });
+      raffle: {
+        ...this.state.raffle,
+        ...options
+      }
+    })
+  }
+
+  handleInputChange = (evt, value) => {
+    let options = {}
+    options[evt.target.name] = evt.target.value
+
+    this.setState({
+      raffle: {
+        ...this.state.raffle,
+        ...options
+      }
+    })
+  }
+
+  isValidForm = () => {
+    let blankMessage = 'não pode ficar em branco'
+    let errors = {}
+    let raffle = this.state.raffle
+    let isValid = true
+
+    if(!raffle.title || raffle.title.length === 0){
+      isValid = false
+      errors.title = blankMessage
+    }
+
+    if(!raffle.raffle_at || raffle.raffle_at.length === 0){
+      isValid = false
+      errors.raffle_at = blankMessage
+    }
+
+    if(!raffle.description || raffle.description.length === 0){
+      isValid = false
+      errors.description = blankMessage
+    }
+
+    if(!raffle.places || raffle.places.length === 0){
+      isValid = false
+      errors.places = blankMessage
+    }
+
+
+    this.setState({
+      errors
+    })
+
+    return isValid
+  }
+
+  isValidField = (fieldName) => {
+    return this.state.errors[fieldName] === undefined
+  }
+
+  handleSubmit = (evt) => {
+    if(evt){
+      evt.preventDefault()
+    }
+
+    if(this.isValidForm()){
+      console.log('submiting...', this.state.raffle)
+    }
+
+  }
+
+  renderErrorMessageFor = (fieldName) => {
+    if(this.isValidField(fieldName)){ return null }
+
+    return(
+      <small className='text-danger active'>{this.state.errors[fieldName]}</small>
+    )
   }
 
   toggleSuccess() {
@@ -59,50 +136,54 @@ class Form extends Component {
                 <strong>Sorteio</strong>
               </CardHeader>
               <CardBody>
-                <Row>
-                  <Col lg="8">
-                    <FormGroup>
-                      <Label htmlFor="company">Nome</Label>
-                      <Input name="title" type="text" id="lotery-name" placeholder="Nome do Sorteio"/>
-                    </FormGroup>
-                  </Col>
-                  <Col lg="4">
-                    <FormGroup>
-                      <Label htmlFor="vat">Data do Sorteio</Label>
-                      <DatePicker
-                          selected={this.state.startDate}
-                          name={"raffle_at"}
-                          locale={'pt'}
-                          className={'form-control'}
-                          onChange={this.handleChange.bind(this)}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <FormGroup row>
-                  <Col xs="12" lg="8">
-                    <FormGroup>
-                      <Label htmlFor="textarea-input">Descrição</Label>
-                      <Input type="textarea" name="description" id="lotery-description" rows="9" placeholder="Descrição"/>
-                    </FormGroup>
-                  </Col>
-                  <Col lg="4">
-                    <FormGroup>
-                      <Label htmlFor="city">Locais</Label>
-                      <Input type="textarea" name="places" id="lotery-locale" rows="9" placeholder="Locais de Sorteio"/>
-                    </FormGroup>
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Col xs="12" md="5">
-                    <Label htmlFor="file-input">Adicionar Imagem</Label>
-                    <Input type="file" id="file-input" name="cover"/>
-                  </Col>
-                </FormGroup>
-                <div className="form-actions d-flex align-items-center justify-content-end">
-                  <Button className="mr-3" type="submit" color="primary">Salvar</Button>
-                  <Button color="secondary">Cancelar</Button>
-                </div>
+                <form onSubmit={this.handleSubmit}>
+                  <Row>
+                    <Col lg="8">
+                      <FormGroup>
+                        <Label htmlFor="name">Nome {this.renderErrorMessageFor('title')}</Label>
+                        <Input className={`${this.isValidField('title') ? '' : 'is-invalid'}`} name="title" type="text" id="lotery-name" placeholder="Nome do Sorteio" onChange={this.handleInputChange} value={this.state.raffle.title || ''}/>
+                      </FormGroup>
+                    </Col>
+                    <Col lg="4">
+                      <FormGroup>
+                        <Label htmlFor="vat">Data do Sorteio {this.renderErrorMessageFor('raffle_at')}</Label>
+                        <DatePicker
+                            className={`${this.isValidField('raffle_at') ? '' : 'is-invalid'} form-control`}
+                            selected={this.state.raffle.raffle_at}
+                            name={"raffle_at"}
+                            locale={'pt'}
+                            onChange={(date) => this.handleDatePickerChange(date, 'raffle_at')}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <FormGroup row>
+                    <Col xs="12" lg="8">
+                      <FormGroup>
+                        <Label htmlFor="textarea-input">Descrição {this.renderErrorMessageFor('description')}</Label>
+                        <Input className={`${this.isValidField('description') ? '' : 'is-invalid'}`} type="textarea" name="description" id="lotery-description" rows="9" placeholder="Descrição" onChange={this.handleInputChange} value={this.state.raffle.description || ''}/>
+                      </FormGroup>
+                    </Col>
+                    <Col lg="4">
+                      <FormGroup>
+                        <Label htmlFor="city">Locais {this.renderErrorMessageFor('places')}</Label>
+                        <Input className={`${this.isValidField('places') ? '' : 'is-invalid'}`} type="textarea" name="places" id="lotery-locale" rows="9" placeholder="Locais de Sorteio" onChange={this.handleInputChange} value={this.state.raffle.places || ''}/>
+                      </FormGroup>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col xs="12" md="5">
+                      <Label htmlFor="file-input">Adicionar Imagem</Label>
+                      <Input type="file" id="file-input" name="cover"/>
+                    </Col>
+                  </FormGroup>
+                  <div className="form-actions d-flex align-items-center justify-content-end">
+                    <Button className="mr-3" type="submit" color="primary">Salvar</Button>
+                    <Link to={'/sorteios'}>
+                      <Button color="secondary">Cancelar</Button>
+                    </Link>
+                  </div>
+                </form>
               </CardBody>
             </Card>
           </Col>

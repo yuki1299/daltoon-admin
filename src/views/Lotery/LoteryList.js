@@ -28,8 +28,8 @@ const LoteryList = (props) => {
           </div>
         </Col>
         <Col md="2" className="d-flex align-items-center justify-content-end">
-          <Link to={'sorteios/1'}>
-            <Button color="primary">1</Button>
+          <Link to={'sorteios/adicionar'}>
+            <Button color="primary">Adicionar</Button>
           </Link>
         </Col>
       </Row>
