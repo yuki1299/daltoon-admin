@@ -41,7 +41,8 @@ module.exports = (env = {}) => {
             options: {
               cacheDirectory: true,
               presets: ['babel-preset-env', 'react', 'env'],
-              plugins: [ require('babel-plugin-transform-object-rest-spread'),
+              plugins: [ require('babel-plugin-transform-runtime'),
+                         require('babel-plugin-transform-object-rest-spread'),
                          require('babel-plugin-transform-class-properties')
                        ]
             }
