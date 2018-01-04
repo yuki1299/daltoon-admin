@@ -7,12 +7,23 @@ import Breadcrumb from '../../components/Breadcrumb/';
 import Aside from '../../components/Aside/';
 import Footer from '../../components/Footer/';
 
+import { isSignedIn, storeCurrentUser } from '../../services/AuthService'
+
 import Lotery from '../../views/Lotery/';
 import LoteryForm from '../../views/Lotery/Form/';
 import Offers from '../../views/Offers/';
 import OfferForm from '../../views/Offers/Form/';
 
 class Full extends Component {
+  componentDidMount(){
+    isSignedIn()
+      .then((currentUser) => {
+        storeCurrentUser(currentUser.data)
+      }).catch((error) => {
+        this.props.history.push('/login')
+      })
+  }
+
   render() {
     return (
       <div className="app">
@@ -29,7 +40,6 @@ class Full extends Component {
                 <Route path="/ofertas/adicionar"    name="Oferta"   component={OfferForm}/>
                 <Route path="/ofertas/:id"          name="Oferta"   component={OfferForm}/>
                 <Route path="/ofertas"              name="Ofertas"  component={Offers}/>
-                <Redirect from="/" to="/login"/>
               </Switch>
             </Container>
           </main>
