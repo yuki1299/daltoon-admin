@@ -15,34 +15,47 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap';
+import LoteryBox from './LoteryBox'
+import { ToastContainer, toast } from 'react-toastify';
+import { css } from 'glamor';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
+import { create, update, destroy, show } from '../../../api/lotery'
 
 class Form extends Component {
 
   componentDidMount () {
     moment.locale('br');
+
+    if(this.props.match.params.id){
+      this.setState({ mode: 'update' })
+
+      this.loadRaffle(this.props.match.params.id)
+    }
   }
 
   constructor(props) {
     super(props);
-  
+
     this.state = {
       startDate: moment(),
       success: false,
       raffle: {},
       errors: {},
+      mode: 'create',
+      isFetching: false,
+      isRemoving: false,
+      coverFile: undefined,
+      removeModal: false,
     };
-
-    this.toggleSuccess = this.toggleSuccess.bind(this);
   }
 
   handleDatePickerChange = (date, fieldName) => {
     let options = {}
     options[fieldName] = date
-    
+
     this.setState({
       raffle: {
         ...this.state.raffle,
@@ -61,6 +74,45 @@ class Form extends Component {
         ...options
       }
     })
+  }
+
+  handleInputChangeCover = (evt, value) => {
+    this.setState({
+      coverFile: evt.target.files[0]
+    })
+  }
+
+  toggleFetching = () => {
+    this.setState({
+      isFetching: !this.state.isFetching
+    })
+  }
+
+  toggleIsRemoving = () => {
+    this.setState({
+      isRemoving: !this.state.isRemoving
+    })
+  }
+
+  toggleRemoveModal = () => {
+    this.setState({
+      removeModal: !this.state.removeModal
+    })
+  }
+
+  loadRaffle = (id) => {
+    show(id)
+      .then((json) => {
+        this.setState({
+          raffle: {
+            ...json,
+            raffle_at: moment(json.raffle_at),
+          }
+        })
+      }).catch((error) => {
+        this.displayErrorMessage()
+        console.log('error', error)
+      })
   }
 
   isValidForm = () => {
@@ -101,15 +153,113 @@ class Form extends Component {
     return this.state.errors[fieldName] === undefined
   }
 
+  displaySuccessMessage = (message) => {
+    toast.success(message, {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  displayErrorMessage = (message="Algum erro aconteceu, tente novamente") => {
+    toast.error(message, {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  updateRaffleCover = (raffle) => {
+    this.coverInput.value = "";
+
+    this.setState({
+      raffle: {
+        ...this.state.raffle,
+        cover: raffle.cover,
+      },
+      mode: 'update',
+      coverFile: undefined
+    })
+  }
+
+  createRaffle = (params) => {
+    create(params)
+      .then((json) => {
+        this.props.history.replace({pathname: `/sorteios/${json.id}`})
+
+        this.displaySuccessMessage('Criado com Sucesso.')
+
+        this.updateRaffleCover(json)
+
+        this.toggleFetching()
+      }).catch((error) => {
+        this.displayErrorMessage()
+
+        this.toggleFetching()
+
+        console.log('error...', error)
+      })
+  }
+
+  updateRaffle = (params) => {
+    update(this.state.raffle.id, params)
+      .then((json) => {
+        this.displaySuccessMessage('Atualizado com Sucesso.')
+
+        this.updateRaffleCover(json)
+
+        this.toggleFetching()
+      }).catch((error) => {
+        this.displayErrorMessage()
+
+        this.toggleFetching()
+
+        console.log('error...', error)
+      })
+  }
+
+  handleRemove = () => {
+    destroy(this.state.raffle.id)
+      .then((json) => {
+        this.toggleIsRemoving()
+
+        this.props.history.push('/sorteios')
+      }).catch((error) => {
+        this.displayErrorMessage()
+
+        this.toggleIsRemoving()
+
+        console.log('error...', error)
+      })
+  }
+
   handleSubmit = (evt) => {
     if(evt){
       evt.preventDefault()
     }
 
     if(this.isValidForm()){
-      console.log('submiting...', this.state.raffle)
+      this.toggleFetching()
+
+      let params = this.buildFormData()
+
+      if(this.state.mode === 'create'){
+        this.createRaffle(params)
+      }else{
+        this.updateRaffle(params)
+      }
+    }
+  }
+
+  buildFormData = () => {
+    const data = new FormData()
+
+    data.append('raffle[title]', this.state.raffle.title)
+    data.append('raffle[places]', this.state.raffle.places)
+    data.append('raffle[description]', this.state.raffle.description)
+    data.append('raffle[raffle_at]', this.state.raffle.raffle_at)
+
+    if(this.state.coverFile){
+      data.append('raffle[cover]', this.state.coverFile)
     }
 
+    return data
   }
 
   renderErrorMessageFor = (fieldName) => {
@@ -120,10 +270,32 @@ class Form extends Component {
     )
   }
 
-  toggleSuccess() {
-    this.setState({
-      success: !this.state.success
-    });
+  renderCoverImage = () => {
+    if(!this.state.raffle || !this.state.raffle.cover ){ return null }
+
+    return(
+      <img src={this.state.raffle.cover.thumb.url} className="img-thumbnail mt-3" />
+    )
+  }
+
+  renderRemoveModal = () => {
+    return(
+      <Modal isOpen={this.state.removeModal} toggle={this.toggleRemoveModal}
+             className={'modal-darger ' + this.props.className}>
+        <ModalHeader toggle={this.toggleRemoveModal}>Alerta</ModalHeader>
+        <ModalBody>
+          <FormGroup row>
+            <Col xs="12" lg="12">
+              <p>Você confirma a exclusão deste Sorteio?</p>
+            </Col>
+          </FormGroup>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={this.handleRemove}>Confirmar</Button>
+          <Button color="secondary" onClick={this.toggleRemoveModal}>Cancelar</Button>
+        </ModalFooter>
+      </Modal>
+    )
   }
 
   render() {
@@ -132,8 +304,14 @@ class Form extends Component {
         <Row>
           <Col lg="12" sm="6">
             <Card>
-              <CardHeader>
+              <CardHeader className={"d-flex justify-content-between align-items-center"}>
                 <strong>Sorteio</strong>
+
+                {
+                  this.state.mode === 'create'
+                  ? null
+                  : <Button color="primary" onClick={this.toggleRemoveModal} className={'mt-0'} disabled={this.state.isRemoving}>{this.state.isRemoving ? '...' : 'Remover'}</Button>
+                }
               </CardHeader>
               <CardBody>
                 <form onSubmit={this.handleSubmit}>
@@ -174,13 +352,14 @@ class Form extends Component {
                   <FormGroup row>
                     <Col xs="12" md="5">
                       <Label htmlFor="file-input">Adicionar Imagem</Label>
-                      <Input type="file" id="file-input" name="cover"/>
+                      <Input type="file" id="file-input" name="cover" onChange={this.handleInputChangeCover} ref={ref=> this.coverInput = ref}/>
+                      {this.renderCoverImage()}
                     </Col>
                   </FormGroup>
                   <div className="form-actions d-flex align-items-center justify-content-end">
-                    <Button className="mr-3" type="submit" color="primary">Salvar</Button>
+                    <Button className="mr-3" type="submit" color="primary" disabled={this.state.isFetching}>{this.state.isFetching ? '...' : 'Salvar'}</Button>
                     <Link to={'/sorteios'}>
-                      <Button color="secondary">Cancelar</Button>
+                      <Button color="secondary">Voltar</Button>
                     </Link>
                   </div>
                 </form>
@@ -189,65 +368,15 @@ class Form extends Component {
           </Col>
         </Row>
 
-        <Row>
-          <Col lg="8" sm="6">
-            <Card>
-              <CardHeader>
-                Realizar Sorteio
-              </CardHeader>
-              <CardBody>
-                <div className="mb-4">
-                  Sorteio do cupom da pizza de graça no Habibs
-                </div>
-                <Card>
-                  <CardHeader className="bg-success">
-                    Ganhador
-                  </CardHeader>
-                  <CardBody>
-                    <div>
-                      Ganhador Imagem
-                    </div>
-                    <div>
-                      Ganhador Nome
-                    </div>
-                    <div>
-                      Ganhador Facebook
-                    </div>
-                    <div>
-                      Ganhador Instagram
-                    </div>
-                    <div>
-                      Ganhador id
-                    </div>
+        {this.renderRemoveModal()}
+        <ToastContainer autoClose={3000} />
 
-                    <Button className="form-actions d-flex align-items-center justify-content-end float-right" color="success" onClick={this.toggleSuccess}>Enviar Mensagem</Button>
-                    <Modal isOpen={this.state.success} toggle={this.toggleSuccess}
-                           className={'modal-success ' + this.props.className}>
-                      <ModalHeader toggle={this.toggleSuccess}>Notificação para ganhador</ModalHeader>
-                      <ModalBody>
-                        <FormGroup row>
-                          <Col xs="12" lg="12">
-                            <FormGroup>
-                              <Label htmlFor="textarea-input">Mensagem</Label>
-                              <Input type="textarea" name="description" id="lotery-description" rows="9" placeholder="Instruções para contato com ganhador do sorteio"/>
-                            </FormGroup>
-                          </Col>
-                        </FormGroup>
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color="success" onClick={this.toggleSuccess}>Enviar</Button>
-                        <Button color="secondary" onClick={this.toggleSuccess}>Cancelar</Button>
-                      </ModalFooter>
-                    </Modal>
-                  </CardBody>
-                </Card>
-                <div className="form-actions d-flex align-items-center">
-                  <Button type="submit" color="primary">Sortear Ganhador</Button>
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+        {
+          this.state.mode === 'update'
+          ? <LoteryBox
+              raffle={this.state.raffle} />
+          : null
+        }
       </div>
     )
   }

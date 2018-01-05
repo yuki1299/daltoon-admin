@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PrivateRoute from './config/PrivateRoute'
 import {HashRouter, Route, Switch} from 'react-router-dom';
 
 // Styles
@@ -23,7 +22,7 @@ ReactDOM.render((
   <HashRouter>
     <Switch>
       <Route exact path="/login" name="Login Page" component={Login}/>
-      <PrivateRoute path="/" name="Home" component={Full}/>
+      <Route path="/" name="Home" component={Full}/>
     </Switch>
   </HashRouter>
 ), document.getElementById('root'));
