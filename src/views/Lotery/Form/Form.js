@@ -22,7 +22,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
-import { create, update, destroy, show } from '../../../api/lotery'
+import { create, update, destroy, show, winner, winnerMessage } from '../../../api/lotery'
 
 class Form extends Component {
 
@@ -43,10 +43,13 @@ class Form extends Component {
       startDate: moment(),
       success: false,
       raffle: {},
+      winnerMessages: [],
+      isFetchingWinnerMessage: false,
       errors: {},
       mode: 'create',
       isFetching: false,
       isRemoving: false,
+      isFetchingWinner: false,
       coverFile: undefined,
       removeModal: false,
     };
@@ -82,6 +85,55 @@ class Form extends Component {
     })
   }
 
+  handleGetWinner = () => {
+    this.setState({
+      isFetchingWinner: true
+    })
+
+    winner(this.state.raffle.id)
+      .then((json) => {
+        this.displaySuccessMessage('Sorteado Escolhido com Sucesso')
+
+        this.setState({
+          raffle: {
+                    ...json,
+                    raffle_at: moment(json.raffle_at),
+                  },
+          isFetchingWinner: false,
+        })
+
+      }).catch((error) => {
+        this.setState({
+          isFetchingWinner: false
+        })
+
+        this.displayErrorMessage()
+      })
+  }
+
+  handleWinnerMessage = (message) => {
+    this.setState({
+      isFetchingWinnerMessage: true
+    })
+
+    winner(this.state.raffle.id)
+      .then((json) => {
+        this.displaySuccessMessage('Mensagem enviada com Sucesso')
+
+        this.setState({
+          winnerMessages: this.state.winnerMessages.concat(jsonq) ,
+          isFetchingWinnerMessage: false,
+        })
+
+      }).catch((error) => {
+        this.setState({
+          isFetchingWinnerMessage: false
+        })
+
+        this.displayErrorMessage()
+      })
+  }
+
   toggleFetching = () => {
     this.setState({
       isFetching: !this.state.isFetching
@@ -107,7 +159,8 @@ class Form extends Component {
           raffle: {
             ...json,
             raffle_at: moment(json.raffle_at),
-          }
+          },
+          winnerMessages: json.winner_messages
         })
       }).catch((error) => {
         this.displayErrorMessage()
@@ -374,7 +427,12 @@ class Form extends Component {
         {
           this.state.mode === 'update'
           ? <LoteryBox
-              raffle={this.state.raffle} />
+              raffle={this.state.raffle}
+              isFetchingWinner= {this.state.isFetchingWinner}
+              onPressChooseWiner={this.handleGetWinner}
+              onSendWinnerMessage={this.state.handleWinnerMessage}
+              winnerMessages={this.state.winnerMessages}
+              isFetchingWinnerMessage={this.state.isFetchingWinnerMessage} />
           : null
         }
       </div>

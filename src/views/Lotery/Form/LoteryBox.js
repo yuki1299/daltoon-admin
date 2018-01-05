@@ -16,9 +16,10 @@ import {
   ModalFooter,
 } from 'reactstrap';
 import SubscribersModal from './SubscribersModal'
-import { users } from '../../../api/lotery'
+import { users, winner } from '../../../api/lotery'
 import { ToastContainer, toast } from 'react-toastify';
 import { css } from 'glamor';
+import Moment from 'react-moment';
 
 class LoteryBox extends Component {
   constructor(props) {
@@ -116,7 +117,7 @@ class LoteryBox extends Component {
   renderChooseWinner = () => {
     return(
       <div className="form-actions d-flex align-items-center justify-content-center">
-        <Button type="submit" color="primary">Sortear Ganhador</Button>
+        <Button type="submit" onClick={this.props.onPressChooseWiner} color="primary" disabled={this.props.isFetchingWinner}>{this.props.isFetchingWinner ? 'Sorteando...' : 'Sortear Ganhador'}</Button>
       </div>
     )
   }
@@ -147,9 +148,38 @@ class LoteryBox extends Component {
               </p>
             </Col>
           </Row>
+
           <Button className="form-actions d-flex align-items-center justify-content-end float-right" color="success" onClick={this.toggleModal}>Enviar Mensagem</Button>
+
+          {
+            this.props.winnerMessages.length > 0
+            ? this.renderMessages()
+            : null
+          }
         </CardBody>
       </Card>
+    )
+  }
+
+  renderMessages = () => {
+    return(
+      <Row>
+        <Col xs="12" lg="12">
+          <Card>
+            <CardHeader >
+              Mensagens Enviadas
+            </CardHeader>
+            <CardBody>
+              <ul>
+                {this.props.winnerMessages.map((message, index) => <li key={index}>
+                                                                      <p className={'mb-0'}>{message.content}</p>
+                                                                      <p className={'mt-0'}><strong>enviado em:</strong> {<Moment parse="YYYY-MM-DD HH:mm:ss" format="DD/MM/YYYY HH:mm:ss">{message.created_at}</Moment>}</p>
+                                                                   </li>)}
+              </ul>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
     )
   }
 

@@ -139,7 +139,7 @@ export function users(id, params=[]){
   })
 }
 
-export function winner(){
+export function winner(id){
   let headers = getCurrentUserCredentials()
   const url   = `${constants.api.path}/api/v1/admin/raffles/${id}/winner`;
 
@@ -151,6 +151,28 @@ export function winner(){
       'access-token': headers.accessToken,
       'expiry': headers.expiry
     },
+  }).then((res) => {
+    if(res.status === 200 || res.status === 201){
+      return res.json()
+    }else{
+      return Promise.reject(res)
+    }
+  })
+}
+
+export function winnerMessage(id, params){
+  let headers = getCurrentUserCredentials()
+  const url   = `${constants.api.path}/api/v1/admin/raffles/${id}/winner-message`;
+
+  return fetch(url,{
+    method: 'POST',
+    headers: {
+      'uid': headers.uid,
+      'client': headers.client,
+      'access-token': headers.accessToken,
+      'expiry': headers.expiry
+    },
+    body: params
   }).then((res) => {
     if(res.status === 200 || res.status === 201){
       return res.json()
