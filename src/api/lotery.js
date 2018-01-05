@@ -167,6 +167,8 @@ export function winnerMessage(id, params){
   return fetch(url,{
     method: 'POST',
     headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
       'uid': headers.uid,
       'client': headers.client,
       'access-token': headers.accessToken,

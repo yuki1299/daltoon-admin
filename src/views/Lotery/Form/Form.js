@@ -112,16 +112,18 @@ class Form extends Component {
   }
 
   handleWinnerMessage = (message) => {
+    const params = JSON.stringify({raffle: {winner_message: message}})
+
     this.setState({
       isFetchingWinnerMessage: true
     })
 
-    winner(this.state.raffle.id)
+    winnerMessage(this.state.raffle.id, params)
       .then((json) => {
         this.displaySuccessMessage('Mensagem enviada com Sucesso')
 
         this.setState({
-          winnerMessages: this.state.winnerMessages.concat(jsonq) ,
+          winnerMessages: this.state.winnerMessages.concat(json) ,
           isFetchingWinnerMessage: false,
         })
 
@@ -430,7 +432,7 @@ class Form extends Component {
               raffle={this.state.raffle}
               isFetchingWinner= {this.state.isFetchingWinner}
               onPressChooseWiner={this.handleGetWinner}
-              onSendWinnerMessage={this.state.handleWinnerMessage}
+              onSendWinnerMessage={this.handleWinnerMessage}
               winnerMessages={this.state.winnerMessages}
               isFetchingWinnerMessage={this.state.isFetchingWinnerMessage} />
           : null

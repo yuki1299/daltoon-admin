@@ -26,6 +26,7 @@ class LoteryBox extends Component {
     super(props);
 
     this.state = {
+      message: '',
       modal: false,
       subscribersModal: false,
       subscribers: [],
@@ -106,6 +107,24 @@ class LoteryBox extends Component {
 
         this.displayErrorMessage()
       })
+  }
+
+  handleSendMessage = () => {
+    if(this.state.message.length === 0){
+      this.displayErrorMessage('Mensagem não pode ser em branca.')
+
+      return false
+    }
+
+    this.toggleModal()
+
+    this.props.onSendWinnerMessage(this.state.message)
+  }
+
+  handleInputMessageChange = (evt) => {
+    this.setState({
+      message: evt.target.value
+    })
   }
 
   displayErrorMessage = (message="Algum erro aconteceu, tente novamente") => {
@@ -193,13 +212,13 @@ class LoteryBox extends Component {
             <Col xs="12" lg="12">
               <FormGroup>
                 <Label htmlFor="textarea-input">Mensagem</Label>
-                <Input type="textarea" name="description" id="lotery-description" rows="9" placeholder="Instruções para contato com ganhador do sorteio"/>
+                <Input type="textarea" name="description" id="lotery-description" rows="9" placeholder="Instruções para contato com ganhador do sorteio" value={this.state.message} onChange={this.handleInputMessageChange}/>
               </FormGroup>
             </Col>
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={this.toggleModal}>Enviar</Button>
+          <Button color="success" onClick={this.handleSendMessage}>Enviar</Button>
           <Button color="secondary" onClick={this.toggleModal}>Cancelar</Button>
         </ModalFooter>
       </Modal>
