@@ -9,6 +9,8 @@ import Footer from '../../components/Footer/';
 
 import { isSignedIn, storeCurrentUser } from '../../services/AuthService'
 
+import Users from '../../views/Users/';
+import UserForm from '../../views/Users/Form/';
 import Lotery from '../../views/Lotery/';
 import LoteryForm from '../../views/Lotery/Form/';
 import Offers from '../../views/Offers/';
@@ -34,6 +36,9 @@ class Full extends Component {
             <Breadcrumb />
             <Container fluid>
               <Switch>
+                <Route path="/usuarios/adicionar"   name="Usuário"  component={UserForm}/>
+                <Route path="/usuarios/:id"         name="Usuário"  component={UserForm}/>
+                <Route path="/usuarios"             name="Usuários" component={Users}/>
                 <Route path="/sorteios/adicionar"   name="Sorteio"  component={LoteryForm}/>
                 <Route path="/sorteios/:id"         name="Sorteio"  component={LoteryForm}/>
                 <Route path="/sorteios"             name="Sorteios" component={Lotery}/>

@@ -1,6 +1,11 @@
 export default {
   items: [
     {
+      name: 'Usuários',
+      url: '/usuarios',
+      icon: 'fa fa-user',
+    },
+    {
       name: 'Sorteios',
       url: '/sorteios',
       icon: 'fa fa-tags',
