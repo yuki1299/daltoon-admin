@@ -192,6 +192,23 @@ const UserCardForm = (props) => {
               </FormGroup>
             </Col>
           </Row>
+          <Row>
+            {/*ABOUT | AVATAR*/}
+            <Col lg="4">
+              <FormGroup>
+                <Label htmlFor="file-input">Avatar</Label>
+                <Input type="file" id="file-input" name="cover" onChange={props.handleInputChangeCover} ref={ref=> props.setCoverInput(ref)}/>
+                {props.renderCoverImage()}
+              </FormGroup>
+            </Col>
+
+            <Col lg="8">
+              <FormGroup>
+                <Label htmlFor="name">Sobre {props.renderErrorMessageFor('about')}</Label>
+                <Input className={`${props.isValidField('about') ? '' : 'is-invalid'}`} name="about" type="textarea" id="user-about" placeholder="Sobre" onChange={props.handleInputChange} value={props.user.about || ''}/>
+              </FormGroup>
+            </Col>
+          </Row>
         </CardBody>
         <CardFooter>
           <div className="form-actions d-flex align-items-center justify-content-end">

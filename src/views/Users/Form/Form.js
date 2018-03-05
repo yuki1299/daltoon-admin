@@ -255,13 +255,13 @@ class Form extends Component {
     });
   }
 
-  updateUserCover = (offer) => {
+  updateUserCover = (user) => {
     this.coverInput.value = "";
 
     this.setState({
-      offer: {
+      user: {
         ...this.state.user,
-        cover: offer.cover,
+        avatar: user.avatar,
       },
       mode: 'edit',
       avatarFile: undefined
@@ -275,7 +275,7 @@ class Form extends Component {
 
         this.displaySuccessMessage('Criado com Sucesso.')
 
-        // this.updateUserCover(json)
+        this.updateUserCover(json)
 
         this.toggleFetching()
       }).catch((error) => {
@@ -292,7 +292,7 @@ class Form extends Component {
       .then((json) => {
         this.displaySuccessMessage('Atualizado com Sucesso.')
 
-        // this.updateUserCover(json)
+        this.updateUserCover(json)
 
         this.toggleFetching()
       }).catch((error) => {
@@ -341,37 +341,38 @@ class Form extends Component {
     const data = new FormData()
 
     // user
-    data.append('user[name]', this.state.user.name)
-    data.append('user[birthday]', this.state.user.birthday)
-    data.append('user[interest]', this.state.user.interest)
-    data.append('user[profession]', this.state.user.profession)
-    data.append('user[gender]', this.state.user.gender)
-    data.append('user[relationship]', this.state.user.relationship)
-    data.append('user[sign]', this.state.user.sign)
-    data.append('user[status]', this.state.user.status)
-    data.append('user[instagram]', this.state.user.instagram)
-    data.append('user[latitude]', this.state.user.latitude)
-    data.append('user[longitude]', this.state.user.longitude)
-    data.append('user[lolcation_name]', this.state.user.lolcation_name)
-    data.append('user[about]', this.state.user.about)
+    data.append('user[name]'          , this.state.user.name)
+    data.append('user[birthday]'      , this.state.user.birthday)
+    data.append('user[interest]'      , this.state.user.interest)
+    data.append('user[profession]'    , this.state.user.profession || '')
+    data.append('user[gender]'        , this.state.user.gender)
+    data.append('user[relationship]'  , this.state.user.relationship)
+    data.append('user[sign]'          , this.state.user.sign)
+    data.append('user[status]'        , this.state.user.status)
+    data.append('user[instagram]'     , this.state.user.instagram || '')
+    data.append('user[latitude]'      , this.state.user.latitude)
+    data.append('user[longitude]'     , this.state.user.longitude)
+    data.append('user[lolcation_name]', this.state.user.lolcation_name || '')
+    data.append('user[about]'         , this.state.user.about || '')
 
     // configuration
-    data.append(`user[configurations_attributes][][id]`, this.state.configuration.id)
-    data.append(`user[configurations_attributes][][location_name]`, this.state.configuration.location_name)
-    data.append(`user[configurations_attributes][][match_active]`, this.state.configuration.match_active)
-    data.append(`user[configurations_attributes][][interest_gender]`, this.state.configuration.interest_gender)
-    data.append(`user[configurations_attributes][][distance_range]`, this.state.configuration.distance_range)
-    data.append(`user[configurations_attributes][][age_min]`, this.state.configuration.age_min)
-    data.append(`user[configurations_attributes][][age_max]`, this.state.configuration.age_max)
-    data.append(`user[configurations_attributes][][single]`, this.state.configuration.single)
+    data.append(`user[configurations_attributes][][id]`               , this.state.configuration.id)
+    data.append(`user[configurations_attributes][][location_name]`    , this.state.configuration.location_name)
+    data.append(`user[configurations_attributes][][match_active]`     , this.state.configuration.match_active)
+    data.append(`user[configurations_attributes][][interest_gender]`  , this.state.configuration.interest_gender)
+    data.append(`user[configurations_attributes][][distance_range]`   , this.state.configuration.distance_range)
+    data.append(`user[configurations_attributes][][age_min]`          , this.state.configuration.age_min)
+    data.append(`user[configurations_attributes][][age_max]`          , this.state.configuration.age_max)
+    data.append(`user[configurations_attributes][][single]`           , this.state.configuration.single)
     data.append(`user[configurations_attributes][][single_points_min]`, this.state.configuration.single_points_min)
     data.append(`user[configurations_attributes][][single_points_max]`, this.state.configuration.single_points_max)
-    data.append(`user[configurations_attributes][][rolled]`, this.state.configuration.rolled)
+    data.append(`user[configurations_attributes][][rolled]`           , this.state.configuration.rolled)
     data.append(`user[configurations_attributes][][rolled_points_min]`, this.state.configuration.rolled_points_min)
     data.append(`user[configurations_attributes][][rolled_points_max]`, this.state.configuration.rolled_points_max)
-    data.append(`user[configurations_attributes][][engaged]`, this.state.configuration.engaged)
-    data.append(`user[configurations_attributes][][observer]`, this.state.configuration.observer)
+    data.append(`user[configurations_attributes][][engaged]`          , this.state.configuration.engaged)
+    data.append(`user[configurations_attributes][][observer]`         , this.state.configuration.observer)
 
+   // avatar
     if(this.state.avatarFile){
       data.append('user[avatar]', this.state.avatarFile)
     }
@@ -388,10 +389,10 @@ class Form extends Component {
   }
 
   renderCoverImage = () => {
-    if(!this.state.user || !this.state.user.cover ){ return null }
+    if(!this.state.user || !this.state.user.avatar ){ return null }
 
     return(
-      <img src={this.state.user.cover.thumb.url} className="img-thumbnail mt-3" />
+      <img src={this.state.user.avatar.thumb.url} className="img-thumbnail mt-3" />
     )
   }
 
