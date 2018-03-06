@@ -354,6 +354,8 @@ class Form extends Component {
     data.append('user[longitude]'     , this.state.user.longitude)
     data.append('user[lolcation_name]', this.state.user.lolcation_name || '')
     data.append('user[about]'         , this.state.user.about || '')
+    data.append('user[single_points]' , this.state.user.single_points || '')
+    data.append('user[rolled_points]' , this.state.user.rolled_points || '')
 
     // configuration
     data.append(`user[configurations_attributes][][id]`               , this.state.configuration.id)

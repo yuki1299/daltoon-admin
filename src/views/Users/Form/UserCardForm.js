@@ -67,7 +67,7 @@ const UserCardForm = (props) => {
             </Col>
           </Row>
 
-          {/*SEXO | RELACIONAMENTO | SIGNO*/}
+          {/*SEXO | RELACIONAMENTO | POINTS*/}
           <Row>
             <Col lg="4">
               <FormGroup>
@@ -92,6 +92,47 @@ const UserCardForm = (props) => {
               </FormGroup>
             </Col>
 
+            {
+              props.user.relationship === 'single' &&
+              <Col lg="4">
+                <FormGroup>
+                  <Label htmlFor="name">Pontos de Solteiro {props.renderErrorMessageFor('single_points')}</Label>
+                  <Input className={`${props.isValidField('single_points') ? '' : 'is-invalid'}`} name="single_points" type="number" id="user-single_points" placeholder="Pontos" onChange={props.handleInputChange} value={props.user.single_points || ''}/>
+                </FormGroup>
+              </Col>
+            }
+
+            {
+              props.user.relationship === 'rolled' &&
+              <Col lg="4">
+                <FormGroup>
+                  <Label htmlFor="name">Pontos de Enrolado {props.renderErrorMessageFor('rolled_points')}</Label>
+                  <Input className={`${props.isValidField('rolled_points') ? '' : 'is-invalid'}`} name="rolled_points" type="number" id="user-rolled_points" placeholder="Pontos" onChange={props.handleInputChange} value={props.user.rolled_points || ''}/>
+                </FormGroup>
+              </Col>
+            }
+          </Row>
+
+          {/*STATUS | INTAGRAM | SIGN*/}
+          <Row>
+            <Col lg="4">
+              <FormGroup>
+                <Label htmlFor="vat">Status {props.renderErrorMessageFor('status')}</Label>
+                <Input type="select" name="status" id="select" onChange={props.handleInputChange} value={props.user.status || 'online'}>
+                  <option value="online">Online</option>
+                  <option value="offline">Offline</option>
+                  <option value="invisible">Invisível</option>
+                </Input>
+              </FormGroup>
+            </Col>
+
+            <Col lg="4">
+              <FormGroup>
+                <Label htmlFor="instagram">Intagram {props.renderErrorMessageFor('instagram')}</Label>
+                <Input className={`${props.isValidField('instagram') ? '' : 'is-invalid'}`} name="instagram" type="text" id="user-instagram" placeholder="Conta do Instagram" onChange={props.handleInputChange} value={props.user.instagram || ''}/>
+              </FormGroup>
+            </Col>
+
             <Col lg="4">
               <FormGroup>
                 <Label htmlFor="vat">Signo {props.renderErrorMessageFor('sign')}</Label>
@@ -110,27 +151,6 @@ const UserCardForm = (props) => {
                   <option value="pisces">Peixes</option>
                   <option value="not_show">Não Definido</option>
                 </Input>
-              </FormGroup>
-            </Col>
-          </Row>
-
-          {/*STATUS | INTAGRAM*/}
-          <Row>
-            <Col lg="4">
-              <FormGroup>
-                <Label htmlFor="vat">Status {props.renderErrorMessageFor('status')}</Label>
-                <Input type="select" name="status" id="select" onChange={props.handleInputChange} value={props.user.status || 'online'}>
-                  <option value="online">Online</option>
-                  <option value="offline">Offline</option>
-                  <option value="invisible">Invisível</option>
-                </Input>
-              </FormGroup>
-            </Col>
-
-            <Col lg="8">
-              <FormGroup>
-                <Label htmlFor="instagram">Intagram {props.renderErrorMessageFor('instagram')}</Label>
-                <Input className={`${props.isValidField('instagram') ? '' : 'is-invalid'}`} name="instagram" type="text" id="user-instagram" placeholder="Conta do Instagram" onChange={props.handleInputChange} value={props.user.instagram || ''}/>
               </FormGroup>
             </Col>
           </Row>
