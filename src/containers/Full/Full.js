@@ -7,7 +7,6 @@ import Breadcrumb from '../../components/Breadcrumb/';
 import Aside from '../../components/Aside/';
 import Footer from '../../components/Footer/';
 
-import { isSignedIn, storeCurrentUser } from '../../services/AuthService'
 
 import Users from '../../views/Users/';
 import UserForm from '../../views/Users/Form/';

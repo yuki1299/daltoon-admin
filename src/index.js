@@ -10,7 +10,6 @@ import 'simple-line-icons/css/simple-line-icons.css';
 // Import Main styles for this application
 import '../scss/style.scss'
 // Temp fix for reactstrap
-import '../scss/core/_dropdown-menu-right.scss'
 
 // Containers
 import Full from './containers/Full/'
@@ -21,8 +20,8 @@ import Login from './views/Login/'
 ReactDOM.render((
   <HashRouter>
     <Switch>
-      <Route exact path="/login" name="Login Page" component={Login}/>
-      <Route path="/" name="Home" component={Full}/>
+      <Route exact path="/" name="Login Page" component={Login}/>
+      <Route path="/dashboard" name="Home" component={Full}/>
     </Switch>
   </HashRouter>
 ), document.getElementById('root'));
