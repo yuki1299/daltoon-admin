@@ -10,8 +10,8 @@ import Footer from '../../components/Footer/';
 
 import Users from '../../views/Users/';
 import UserForm from '../../views/Users/Form/';
-import Lotery from '../../views/Lotery/';
-import LoteryForm from '../../views/Lotery/Form/';
+// import History from '../../views/History/';
+// import HistoryForm from '../../views/History/Form/';
 import Offers from '../../views/Offers/';
 import OfferForm from '../../views/Offers/Form/';
 
@@ -38,9 +38,6 @@ class Full extends Component {
                 <Route path="/usuarios/adicionar"   name="Usuário"  component={UserForm}/>
                 <Route path="/usuarios/:id"         name="Usuário"  component={UserForm}/>
                 <Route path="/usuarios"             name="Usuários" component={Users}/>
-                <Route path="/sorteios/adicionar"   name="Sorteio"  component={LoteryForm}/>
-                <Route path="/sorteios/:id"         name="Sorteio"  component={LoteryForm}/>
-                <Route path="/sorteios"             name="Sorteios" component={Lotery}/>
                 <Route path="/ofertas/adicionar"    name="Oferta"   component={OfferForm}/>
                 <Route path="/ofertas/:id"          name="Oferta"   component={OfferForm}/>
                 <Route path="/ofertas"              name="Ofertas"  component={Offers}/>

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
 import 'moment/locale/br';
 
-const LoteryItem = (props) => {
+const HistoryItem = (props) => {
   return (
     <tr>
       <td><Link to={`/sorteios/${props.raffle.id}`}>{props.raffle.title}</Link></td>
@@ -17,4 +17,4 @@ const LoteryItem = (props) => {
   )
 }
 
-export default LoteryItem
+export default HistoryItem

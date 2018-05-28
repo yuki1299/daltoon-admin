@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import LoteryHeader from './LoteryHeader';
-import LoteryList from './LoteryList';
+import HistoryHeader from './HistoryHeader';
+import HistoryList from './HistoryList';
 import {
   Row,
   Col,
@@ -91,8 +91,8 @@ class Tables extends Component {
         <Row>
           <Col>
             <Card>
-              <LoteryHeader/>
-              <LoteryList
+              <HistoryHeader/>
+              <HistoryList
                 list={this.state.raffles}
                 isFetching={this.state.isFetching}
                 total={this.state.total}

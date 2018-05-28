@@ -4,7 +4,7 @@ import {
 } from 'reactstrap';
 
 
-const LoteryHeader = (props) => {
+const HistoryHeader = (props) => {
   return (
     <CardHeader>
       <i className="fa fa-tags"></i> Sorteios
@@ -12,4 +12,4 @@ const LoteryHeader = (props) => {
   );
 };
 
-export default LoteryHeader;
+export default HistoryHeader;

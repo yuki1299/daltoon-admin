@@ -17,9 +17,9 @@ import {
 } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import ContentLoader from 'react-content-loader'
-import LoteryItem from './LoteryItem'
+import HistoryItem from './HistoryItem'
 
-const LoteryList = (props) => {
+const HistoryList = (props) => {
   const renderContentLoader = () => {
     return(
       <tr>
@@ -133,4 +133,4 @@ const LoteryList = (props) => {
   );
 };
 
-export default LoteryList;
+export default HistoryList;
