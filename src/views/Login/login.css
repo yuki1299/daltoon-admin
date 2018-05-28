@@ -1,5 +1,40 @@
 .app {
-	min-height: 110vh;
+	min-height: 110vh !important;
+}
+
+.app .container {
+	max-width: 100%;
+}
+
+.question-container {
+	flex: 0 0 60% !important;
+	max-width: 60% !important;
+	height: 65vh;
+	padding: 0 !important;
+	border-radius: 40px;
+}
+
+.question_1 {
+	background-image: url("../../../public/img//questions/question_1_bg.png");
+	background-size: cover;
+}
+
+.question-container .card {
+	background-color: transparent;
+	border: none;
+	height: 65vh;
+	padding: 0 !important;
+}
+
+.question-container .card .card-body {
+	padding: 0 !important;
+}
+
+.question-container .card .card-body div {
+	width: 33.33333%;
+	float: left;
+	display: flex;
+	justify-content: center;
 }
 
 .default-bg {
@@ -21,7 +56,8 @@
 
 .card.student-bg-color {
 	background-color: #3B86FF;
-	border-radius: 20px;
+	border-radius: 40px;
+	height: 100%;
 }
 
 .card-body h1 {
@@ -33,6 +69,10 @@
 	text-transform: uppercase;
 	font-size: 27px;
 	margin: 40px 0 35px;
+}
+
+.card-group {
+	display: block !important;
 }
 
 label {
@@ -115,13 +155,53 @@ label {
 
 .student-login-container {
 	flex-direction: column;
-	width: 55%;
-	height: 73%;
-	margin: 0 auto;
+	width: 75%;
+    height: 65vh;
+    margin: 0 5% 0 20%;
+}
+
+.student-login-container .card-body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.student-login-container .card-body label {
+	width: 100%;
+	text-align: center;
+	margin-top: 8%;
+	font-size: 29px;
+}
+
+.student-login-container .card-body .btn-secondary,
+.student-login-container .card-body .btn-secondary:hover,
+.student-login-container .card-body .btn-secondary:active {
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.modal-lg {
+	max-width: 80% !important;
 }
 
 .d-none {
 	display: none;
+}
+
+.bubbles-top-box {
+	position: absolute;
+	top: -26px;
+	right: -53px;
+}
+
+.play_button_box {
+	width: 40%;
+	margin: 0 auto;
+}
+
+.play_button_box img {
+	width: 100%;
 }
 
 .bubbles-teacher-box {
@@ -137,10 +217,23 @@ label {
 	transform: rotate(15deg);
 }
 
-.bubbles-top-box {
-	position: absolute;
-	top: -26px;
-	right: -53px;
+.question_box {
+    position: absolute;
+    top: 0;
+    right: 29%;
+    width: 40%;
+}
+
+.question_box h1 {
+	text-align: right;
+    font-size: 20px;
+    padding-right: 10%;
+    margin-bottom: 5px;
+}
+
+.question_box p {
+	font-size: 12px;
+    padding: 0 2% 0 4%;
 }
 
 .bubbles-top {

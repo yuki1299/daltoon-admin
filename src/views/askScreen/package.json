@@ -1,6 +1,6 @@
 {
-  "name": "Lotery",
+  "name": "Ask",
   "version": "0.0.0",
   "private": true,
-  "main": "./Lotery.js"
+  "main": "./Ask.js"
 }
