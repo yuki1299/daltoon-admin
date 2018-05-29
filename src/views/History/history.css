@@ -6,103 +6,12 @@
 	max-width: 100%;
 }
 
-.search-class-box.card {
-	padding: 0 !important;
-	border-radius: 19px;
-	margin-bottom: 15px !important;
-}
-
-.search-class-box i {
-	position: absolute;
-	right: 3.6%;
-	top: -14px;
-	font-size: 31px !important;
-	font-weight: bold;
-	color: #FFDC00;
-	transform: rotate(90deg);
-}
-
-.search-input {
-	width: 100%;
-	border-radius: 19px;
-	border: solid 1px #FFDC00;
-	height: 50px;
-	padding-left: 10px;
-	display: flex;
-}
-
-.search-input input {
-	width: 87%;
-	border: none;
-	border-right: solid 2px;
-	border-color: #FFDC00;
-	height: 75%;
-	padding-left: 10px;
-	margin: auto 0;
-}
-
-.search-input input:focus {
-	outline: #FFDC00;
-}
-
-.class-list-item.card {
-	border: none;
-	border-bottom: solid 2px #FFDC00;
-	margin-bottom: 10px;
-	flex: 0 auto !important;
-	background-color: transparent;
-}
-
-.class-list-item p {
-	color: #FFF;
-	font-size: 16px;
-	font-weight: 500;
-	text-align: center;
-	margin-bottom: 0;
-}
-
 .question-container {
-	flex: 0 0 53% !important;
-	max-width: 53% !important;
-	margin-left: 6%;
+	flex: 0 0 60% !important;
+	max-width: 60% !important;
 	height: 65vh;
 	padding: 0 !important;
 	border-radius: 40px;
-	background-color: #3B86FF;
-}
-
-.class-list-students {
-	width: 27%;
-	float: left;
-	border-right: solid 2px #FFDC00;
-	height: 53vh;
-}
-
-.class-list-students ul {
-	padding: 20px;
-	height: 86%;
-}
-
-.class-list-students ul li {
-    color: #FFF;
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 0;
-    list-style: none;
-    margin-bottom: 15px;
-}
-
-.class-list-students button {
-	height: 50px;
-	border-color: #FFDC00;
-	color: #FFDC00;
-	background-color: transparent;
-	border-radius: 20px;
-	width: 90%;
-	border-width: 2px;
-	text-transform: uppercase;
-	font-weight: 700;
-	font-size: 19px;
 }
 
 .question_1 {
@@ -117,61 +26,15 @@
 	padding: 0 !important;
 }
 
-.question-container .card h2 {
-	text-align: center;
-	color: #FFF;
-	margin-bottom: 15px;
-}
-
 .question-container .card .card-body {
 	padding: 0 !important;
-	width: 70%;
-	height: 50vh;
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	flex-direction: column;
-	float: left;
 }
 
 .question-container .card .card-body div {
+	width: 33.33333%;
 	float: left;
 	display: flex;
 	justify-content: center;
-}
-
-.question-container .card .card-body .student-daltonism-percentage {
-	padding: 0 40px;
-	margin: 20px auto;
-}
-
-.question-container .card .card-body .student-daltonism-percentage p {
-	color: #FFDC00;
-	font-size: 30px;
-	font-weight: 500;
-}
-
-.question-container .card .student-answers {
-	width: 30%;
-	float: left;
-}
-
-.question-container .card .student-answers ul {
-	padding-left: 0;
-	height: 48vh;
-    margin-bottom: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
-.question-container .card .student-answers ul li {
-	color: #FFF;
-	font-size: 16px;
-	font-weight: 500;
-	margin-bottom: 0;
-	list-style: none;
-	margin-bottom: 10px;
 }
 
 .default-bg {
@@ -188,32 +51,13 @@
 }
 
 .logo-img {
-	width: 24%;
+	width: 30%;
 }
 
 .card.student-bg-color {
 	background-color: #3B86FF;
-	border-radius: 19px;
-	height: auto;
-    padding: 20px 40px 40px !important;
-	margin-bottom: 15px !important;
-}
-
-.add-class-button {
-	background-color: #3B86FF;
-	border-radius: 19px;
-}
-
-.add-class-button button,
-.add-class-button button.btn-secondary:active,
-.add-class-button button:focus {
-	background-color: transparent !important;
-	width: 100%;
-	color: #FFF !important;
-	font-weight: 500 !important;
-	border: none !important;
-	box-shadow: none !important;
-	font-size: 20px;
+	border-radius: 40px;
+	height: 100%;
 }
 
 .card-body h1 {
@@ -311,15 +155,9 @@ label {
 
 .student-login-container {
 	flex-direction: column;
-	width: 95%;
+	width: 75%;
     height: 65vh;
     margin: 0 5% 0 20%;
-}
-
-.student-login-container h2 {
-	color: #3B86FF;
-	font-size: 23px;
-	font-weight: 500;
 }
 
 .student-login-container .card-body {
@@ -380,20 +218,17 @@ label {
 }
 
 .question_box {
-    position: relative;
+    position: absolute;
     top: 0;
-    right: 0;
-    width: 100%;
+    right: 29%;
+    width: 40%;
 }
 
 .question_box h1 {
-	text-align: center;
-    font-size: 25px;
-    color: #FFF;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    text-transform: uppercase;
-    border-bottom: solid 2px #FFDC00;
+	text-align: right;
+    font-size: 20px;
+    padding-right: 10%;
+    margin-bottom: 5px;
 }
 
 .question_box p {
@@ -407,11 +242,11 @@ label {
 
 .bubbles-bottom-box {
 	position: absolute;
-    bottom: 35px;
-    right: -41%;
-    transform: rotate(25deg);
+	bottom: -38px;
+	left: -58px;
+	transform: rotate(45deg);
 }
 
 .bubbles-bottom {
-	width: 30%;
+	width: 90%;
 }

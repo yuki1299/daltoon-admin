@@ -1,16 +1,42 @@
 import React, {Component} from 'react';
-import {Container, Row, Col, CardGroup, Card, CardBody, Button, Input, InputGroup, InputGroupAddon, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Container, Row, Col, CardGroup, Card, CardBody, CardHeader, Button, Input, InputGroup, InputGroupAddon, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
+import SearchInput, {createFilter} from 'react-search-input'
+import emails from './Mails'
 import './login.css';
+
+const KEYS_TO_FILTERS = ['user.name', 'subject', 'dest.name']
+
+const pie = {
+  labels: [
+    'Errado',
+    'Certo',
+  ],
+  datasets: [
+    {
+      data: [300, 50],
+      backgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+      ],
+      hoverBackgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+      ],
+    }],
+};
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       large: true,
+      searchTerm: ''
     };
 
     this.toggleLarge = this.toggleLarge.bind(this);
+    this.searchUpdated = this.searchUpdated.bind(this)
   }
 
   toggleLarge() {
@@ -20,6 +46,8 @@ class Login extends Component {
   }
 
   render() {
+    const filteredEmails = emails.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+
     return (
       <div className="app flex-row default-bg">
         <Container>
@@ -43,56 +71,134 @@ class Login extends Component {
           <Row>
             <Col md="4">
               <CardGroup className="student-login-container">
+                <h2> PESQUISAR SALA </h2>
+                <Card className="p-4 search-class-box">
+                  <SearchInput className="search-input" onChange={this.searchUpdated} />
+                  <i className="icon-magnifier icons font-2xl d-block mt-4"></i>
+                </Card>
+
                 <Card className="p-4 student-bg-color">
-                  <div className="bubbles-top-box">
-                    <img className="bubbles-top" src={"/img/bubbles-img.png"} alt={"bubbles-top"}/>
-                  </div>
-                  <div className="bubbles-bottom-box">
-                    <img className="bubbles-bottom" src={"/img/bubbles-img.png"} alt={"bubbles-bottom"}/>
-                  </div>
-                  <CardBody>
-                    <Button onClick={this.toggleLarge} className="play_button_box">
-                      <img className="bubbles-top" src={"/img/play_button.png"} alt={"play_button"}/>
-                    </Button>
-
-                    <label> ASSISTIR NOVAMENTE </label>
-
-                    <Modal isOpen={this.state.large} toggle={this.toggleLarge}
-                         className={'modal-lg ' + this.props.className}>
-                    <ModalHeader toggle={this.toggleLarge}>Questão 1</ModalHeader>
-                    <ModalBody>
-                      <iframe width="100%" height="678" src="https://www.youtube.com/embed/A7qGNzzqXA4?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="secondary" onClick={this.toggleLarge}>Fechar</Button>
-                    </ModalFooter>
-                  </Modal>
-                  </CardBody>
+                  {filteredEmails.map(email => {
+                    return (
+                      <Card className="p-4 class-list-item">
+                        <div className="mail" key={email.id}>
+                          <div className="from">
+                            <p> {email.user.name} </p>
+                          </div>
+                          <div className="subject">
+                            <p> {email.subject} </p>
+                          </div>
+                        </div>
+                      </Card>
+                    )
+                  })}
                 </Card>
-                <Card className="d-none text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
-                  <CardBody className="text-center">
-                    <div>
-                      <h2>Cadastro</h2>
-                      <p>Para se cadastrar entre em contato com a equipe do Europa!</p>
-                    </div>
-                  </CardBody>
-                </Card>
+                <div class="add-class-button">
+                  <Button> ADICIONAR TURMA </Button>
+                </div>
+                <div className="bubbles-bottom-box">
+                  <img className="bubbles-bottom" src={"/img/bubbles-img.png"} alt={"bubbles-bottom"}/>
+                </div>
               </CardGroup>
             </Col>
 
-            <Col md="7" className="question-container question_1">
+            <Col md="7" className="question-container">
               <CardGroup>
-                <Card className="p-4">
-                  <div className="question_box">
-                    <h1>Questão 1</h1>
-                    <p> Lorem ipsum pellentesque curabitur porta maecenas pretium ipsum velit aptent vestibulum, pellentesque per euismod</p>
+                <div className="p-4">
+                  <div className="bubbles-teacher-box">
+                    <img className="bubbles-teacher" src={"/img/bubbles-img.png"} alt={"bubbles-teacher"}/>
                   </div>
-                  <CardBody>
-                    <div>A</div>
-                    <div>B</div>
-                    <div>C</div>
-                  </CardBody>
-                </Card>
+                  <div className="question_box">
+                    <h1>Turma do bairro</h1>
+                  </div>
+
+                  <div>
+                    <div className="class-list-students">
+                      <ul>
+                        <li>
+                          José Bezerra
+                        </li>
+
+                        <li>
+                          Merida da Silva
+                        </li>
+
+                        <li>
+                          Beatriz Leonardo
+                        </li>
+
+                        <li>
+                          Aurora Boreal
+                        </li>
+                      </ul>
+
+                      <Link to={'/contato'}>
+                        <Button color="primary" className="px-4">ATIVAR CÓDIGO</Button>
+                      </Link>
+                    </div>
+
+                    <Card>
+                      <div> 
+                        <h2> José Bezerra </h2>
+                      </div>
+                      <div>
+                        <CardBody>
+                          <div className="chart-wrapper">
+                            <Pie data={pie} />
+                          </div>
+                          <div className="student-daltonism-percentage"> 
+                            <p>
+                              80% de chance de ter DALTONISMO
+                            </p>
+                          </div>
+                        </CardBody>
+                        <div className="student-answers">
+                          <ul>
+                            <li>
+                              Pergunta 1
+                            </li>
+
+                            <li>
+                              Pergunta 2
+                            </li>
+
+                            <li>
+                              Pergunta 3
+                            </li>
+
+                            <li>
+                              Pergunta 4
+                            </li>
+
+                            <li>
+                              Pergunta 5
+                            </li>
+
+                            <li>
+                              Pergunta 6
+                            </li>
+
+                            <li>
+                              Pergunta 7
+                            </li>
+
+                            <li>
+                              Pergunta 8
+                            </li>
+
+                            <li>
+                              Pergunta 9
+                            </li>
+
+                            <li>
+                              Pergunta 10
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
               </CardGroup>
             </Col>
 
@@ -100,6 +206,10 @@ class Login extends Component {
         </Container>
       </div>
     );
+  }
+
+  searchUpdated (term) {
+    this.setState({searchTerm: term})
   }
 }
 

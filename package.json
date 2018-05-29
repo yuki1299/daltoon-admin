@@ -53,9 +53,11 @@
     "react-google-places-suggest": "^3.3.1",
     "react-moment": "^0.6.8",
     "react-router-dom": "4.2.2",
+    "react-search-input": "^0.11.3",
     "react-toastify": "^3.2.1",
     "react-transition-group": "2.2.1",
     "reactstrap": "5.0.0-alpha.4",
+    "redux-search": "^2.4.0",
     "simple-line-icons": "2.4.1"
   },
   "scripts": {
