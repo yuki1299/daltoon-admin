@@ -415,3 +415,172 @@ label {
 .bubbles-bottom {
 	width: 30%;
 }
+
+
+
+
+
+
+/* LOGIM PAGE CSS 
+
+.app {
+	min-height: 110vh !important;
+}
+
+.default-bg {
+	background-image: url("../../../public/img/login_bg.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.login-img-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 65px 0 50px;
+}
+
+.logo-img {
+	width: 30%;
+}
+
+.card.student-bg-color {
+	background-color: #3B86FF;
+	border-radius: 20px;
+}
+
+.card-body h1 {
+	color: #FFF;
+	text-align: center;
+	width: 100%;
+	z-index: 999;
+	position: relative;
+	text-transform: uppercase;
+	font-size: 27px;
+	margin: 40px 0 35px;
+}
+
+label {
+	width: 80%;
+	color: #FFF;
+	font-size: 18px;
+	text-transform: uppercase;
+	font-weight: 600;
+	display: block !important;
+	margin: 0 auto;
+}
+
+.input-group .form-control {
+	border-radius: 20px;
+}
+
+.mb-3.input-group {
+	margin-bottom: 35px !important;
+}
+
+
+.mb-3.input-group,
+.mb-4.input-group {
+	width: 77%;
+	margin: 0 auto;
+	height: 50px;
+}
+
+.teacher-login-button {
+	position: absolute !important;
+	width: 21% !important;
+	right: 60px;
+	top: 25px;
+}
+
+.teacher-login-button button {
+	max-width: 100%;
+  background-color: #3B86FF;
+  height: 50px;
+  font-size: 16px;
+  text-align: left;
+  text-transform: uppercase;
+  border-radius: 18px;
+  width: 100%;
+  font-weight: 700;
+  padding-left: 35px !important;
+}
+
+.student-login-button {
+	margin: 0 auto;
+	flex: 0 0 100%;
+	max-width: 100%;
+	justify-content: center;
+	display: flex;
+	margin-top: 35px;
+}
+
+.student-login-button a {
+	width: 100%;
+}
+
+.student-login-button button {
+	height: 50px;
+	border-color: #FFDC00;
+	color: #FFDC00;
+	background-color: transparent;
+	border-radius: 20px;
+	width: 100%;
+	border-width: 2px;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 19px;
+}
+
+.student-login-button .btn-primary:hover {
+  color: #fff;
+  background-color: #FFDC00;
+  border-color: #FFDC00;
+}
+
+.student-login-container {
+	flex-direction: column;
+	width: 55%;
+	height: 73%;
+	margin: 0 auto;
+}
+
+.d-none {
+	display: none;
+}
+
+.bubbles-teacher-box {
+	position: absolute;
+	right: -12px;
+	top: -9px;
+	z-index: -1;
+}
+
+.bubbles-teacher-box img {
+	width: 35%;
+	float: right;
+	transform: rotate(15deg);
+}
+
+.bubbles-top-box {
+	position: absolute;
+	top: -26px;
+	right: -53px;
+}
+
+.bubbles-top {
+	width: 90%;
+}
+
+.bubbles-bottom-box {
+	position: absolute;
+	bottom: -38px;
+	left: -58px;
+	transform: rotate(45deg);
+}
+
+.bubbles-bottom {
+	width: 90%;
+}
+
+*/
